@@ -11,12 +11,24 @@
 </form>
 
 <div style="margin-top:10px;">
-    <span>価格順で表示:</span>
-    <select name="sort">
-        <option value="asc">安い順</option>
-        <option value="desc">高い順</option>
-    </select>
+    <form method="get" action="{{ url('/products') }}">
+        <span>価格順で表示:</span>
+        <select name="sort" onchange="this.form.submit()">
+            <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>安い順に表示</option>
+            <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>高い順に表示</option>
+        </select>
+    </form>
 </div>
+
+@if(!empty($currentSort))
+<div id="sort-history" style="display:flex; justify-content:space-between; align-items:center; border:1px solid #ccc; padding:5px 10px; margin-top:10px; background-color:#f9f9f9;">
+    <span>
+        {{ $currentSort == 'asc' ? '安い順' : '高い順' }} に表示
+    </span>
+
+    <button type="button" onclick="document.getElementById('sort-history').style.display='none'" style="border:none; background:none; font-weight:bold; cursor:pointer;">×</button>
+</div>
+@endif
 
 <hr>
 

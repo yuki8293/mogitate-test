@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $allProducts = [
             ['id' => 1, 'name' => 'キウイ', 'price' => 800, 'image' => 'kiwi.png'],
@@ -24,6 +24,14 @@ class ProductController extends Controller
             ['id' => 10, 'name' => '巨峰', 'price' => 1100, 'image' => 'grapes.png'],
         ];
 
+        // 並び替え処理
+        $sort = $request->get('sort'); // 'asc' or 'desc'
+        if ($sort === 'asc') {
+            usort($allProducts, fn($a, $b) => $a['price'] <=> $b['price']);
+        } elseif ($sort === 'desc') {
+            usort($allProducts, fn($a, $b) => $b['price'] <=> $a['price']);
+        }
+
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
         $perPage = 6;
         $currentItems = array_slice($allProducts, ($currentPage - 1) * $perPage, $perPage);
@@ -35,7 +43,7 @@ class ProductController extends Controller
             ['path' => url('/products')]
         );
 
-        return view('products.index', ['products' => $paginatedProducts]);
+        return view('products.index', ['products' => $paginatedProducts, 'currentSort' => $sort]);
     }
 
     public function search(Request $request) {}
