@@ -8,7 +8,7 @@
 <h2>商品一覧</h2>
 @endif
 
-<a href="{{ url('/products/create') }}">＋商品を追加</a>
+<a href="{{ url('/products/register') }}">＋商品を追加</a>
 
 <form action="{{ url('/products/search') }}" method="get" style="margin-top:10px;">
     <input type="text" name="keyword" placeholder="検索キーワード">

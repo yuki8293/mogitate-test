@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Http\Requests\ProductRequest;
+use App\Http\Requests\ProductUpdateRequest;
 
 class ProductController extends Controller
 {
@@ -63,16 +65,10 @@ class ProductController extends Controller
         return view('products.register', compact('seasons'));
     }
 
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
 
-        $request->validate([
-            'name'        => 'required|max:255',                     // 商品名：必須
-            'price'       => 'required|integer|min:0|max:10000',    // 値段：必須、数値型、0~10000円
-            'image'       => 'required|file|mimes:png,jpeg',        // 商品画像：アップロード必須、拡張子 png/jpeg
-            'season'      => 'required',                             // 季節：選択必須
-            'description' => 'required|max:120',                    // 商品説明：必須、最大120文字
-        ]);
+        $validated = $request->validated();
 
         // 画像アップロード（storage/app/public/products に保存）
         if ($request->hasFile('image')) {
@@ -81,30 +77,41 @@ class ProductController extends Controller
             $imagePath = null;
         }
 
-        // 2️⃣ products テーブルに保存
+        // products テーブルに保存
         $product = \App\Models\Product::create([
-            'name'        => $request->name,
-            'price'       => $request->price,
-            'image'       => $$imagePath,
-            'description' => $request->description,
+            'name'        => $validated['name'],
+            'price'       => $validated['price'],
+            'image'       => $imagePath,
+            'description' => $validated['description'],
         ]);
 
-        // 3️⃣ product_season 中間テーブルに保存
-        $product->seasons()->attach($request->season);
+        // product_season 中間テーブルに保存
+        $product->seasons()->attach($validated['season']);
 
-        // 4️⃣ 一覧画面にリダイレクト
+        // 一覧画面にリダイレクト
         return redirect('/products')->with('success', '商品を登録しました！');
     }
 
-    public function update(Request $request, $productId) {
+    public function update(ProductUpdateRequest $request, $productId) {
 
-        $request->validate([
-            'name'        => 'required|max:255',
-            'price'       => 'required|integer|min:0|max:10000',
-            'image'       => 'required|file|mimes:png,jpeg', // 必須の場合
-            'season'      => 'required',
-            'description' => 'required|max:120',
-        ]);
+        $validated = $request->validated();
+
+        $product = Product::findOrFail($productId);
+        $product->name = $validated['name'];
+        $product->price = $validated['price'];
+        $product->description = $validated['description'];
+
+        if ($request->hasFile('image')) {
+            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('images/products'), $imageName);
+            $product->image = $imageName;
+        }
+
+        $product->save();
+        $product->seasons()->sync($validated['seasons']);
+
+        return redirect('/products')
+            ->with('success', '商品情報を更新しました');
     }
 
     public function destroy($productId) {}

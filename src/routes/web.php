@@ -21,10 +21,10 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/search', [ProductController::class, 'search']);
 
 // 商品詳細
-Route::get('/products/detail/{productId}', [ProductController::class, 'show']);
+Route::get('/products/detail/{productId}', [ProductController::class, 'show'])->name('products.show');
 
 // 商品更新
-Route::post('/products/{productId}/update', [ProductController::class, 'update']);
+Route::post('/products/{productId}/update', [ProductController::class, 'update'])->name('products.update');
 
 // 商品登録
 Route::get('/products/register', [ProductController::class, 'create']);
