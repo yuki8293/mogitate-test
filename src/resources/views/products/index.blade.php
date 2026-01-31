@@ -1,9 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<h2>商品一覧</h2>
 
-<a href="{{ url('/products/register') }}">＋商品を追加</a>
+@if(!empty($keyword))
+<h2>"{{ $keyword }}"の商品一覧</h2>
+@else
+<h2>商品一覧</h2>
+@endif
+
+<a href="{{ url('/products/create') }}">＋商品を追加</a>
 
 <form action="{{ url('/products/search') }}" method="get" style="margin-top:10px;">
     <input type="text" name="keyword" placeholder="検索キーワード">
@@ -34,10 +39,10 @@
 
 @foreach($products as $product)
 <div style="border:1px solid #ccc; margin-bottom:10px; padding:10px;">
-    <img src="{{ asset('images/products/' . $product['image']) }}" alt="{{ $product['name'] }}" width="100">
+    <img src="{{ asset('images/products/' . $product->image) }}" alt="{{ $product->name }}" width="100">
 
-    <h3>{{ $product['name'] }}</h3>
-    <p>¥{{ number_format($product['price']) }}</p>
+    <h3>{{ $product->name }}</h3>
+    <p>¥{{ number_format($product->price) }}</p>
 </div>
 @endforeach
 
