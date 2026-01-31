@@ -50,7 +50,11 @@ class ProductController extends Controller
         ]);
     }
 
-    public function show($productId) {}
+    public function show($productId) {
+
+        $product = Product::findOrFail($productId);
+        return view('products.show', compact('product'));
+    }
 
     public function create()
     {
@@ -92,7 +96,16 @@ class ProductController extends Controller
         return redirect('/products')->with('success', '商品を登録しました！');
     }
 
-    public function update(Request $request, $productId) {}
+    public function update(Request $request, $productId) {
+
+        $request->validate([
+            'name'        => 'required|max:255',
+            'price'       => 'required|integer|min:0|max:10000',
+            'image'       => 'required|file|mimes:png,jpeg', // 必須の場合
+            'season'      => 'required',
+            'description' => 'required|max:120',
+        ]);
+    }
 
     public function destroy($productId) {}
 }

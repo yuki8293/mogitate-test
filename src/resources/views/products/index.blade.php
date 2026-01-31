@@ -38,12 +38,15 @@
 <hr>
 
 @foreach($products as $product)
-<div style="border:1px solid #ccc; margin-bottom:10px; padding:10px;">
-    <img src="{{ asset('images/products/' . $product->image) }}" alt="{{ $product->name }}" width="100">
+<a href="{{ url('/products/detail/' . $product->id) }}" style="text-decoration:none; color:inherit;">
 
-    <h3>{{ $product->name }}</h3>
-    <p>¥{{ number_format($product->price) }}</p>
-</div>
+    <div style="border:1px solid #ccc; margin-bottom:10px; padding:10px;">
+        <img src="{{ asset('images/products/' . $product->image) }}" alt="{{ $product->name }}" width="100">
+
+        <h3>{{ $product->name }}</h3>
+        <p>¥{{ number_format($product->price) }}</p>
+    </div>
+</a>
 @endforeach
 
 {{ $products->links() }}
