@@ -8,7 +8,10 @@
 
     <!-- 商品名 -->
     <div>
-        <label>商品名</label><br>
+        <label>商品名
+            <span class="required-badge">必須</span>
+        </label><br>
+
         <input type="text" name="name" value="{{ old('name') }}">
         <div class="form__error">
             @error('name')
@@ -19,7 +22,10 @@
 
     <!-- 値段 -->
     <div>
-        <label>値段</label><br>
+        <label>値段
+            <span class="required-badge">必須</span>
+        </label><br>
+
         <input type="number" name="price" value="{{ old('price') }}">
         <div class="form__error">
             @error('price')
@@ -28,30 +34,67 @@
         </div>
     </div>
 
-    <!-- 商品画像 -->
+    {{-- 商品画像 --}}
     <div>
-        <label>商品画像</label><br>
-        <input type="file" name="image">
+        <label>商品画像
+            <span class="required-badge">必須</span>
+        </label><br>
+
+        <input type="file" name="image" id="imageInput" accept="image/*"><br>
+
+        {{-- 画像プレビュー --}}
+        <img id="preview" src="" alt="選択した画像" style="max-width:150px; margin-top:10px; display:none;">
+
         <div class="form__error">
             @error('image')
             {{ $message }}
             @enderror
         </div>
     </div>
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const preview = document.getElementById('preview');
+
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.setAttribute('src', e.target.result);
+                    preview.style.display = 'block'; // 画像を表示
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.setAttribute('src', '');
+                preview.style.display = 'none'; // ファイルなしなら非表示
+            }
+        });
+    </script>
 
     <!-- 季節 -->
     <div>
-        <label>季節</label><br>
-        <select name="season">
-            <option value="">選択してください</option>
-            @foreach($seasons as $season)
-            <option value="{{ $season->id }}" {{ old('season') == $season->id ? 'selected' : '' }}>
-                {{ $season->name }}
-            </option>
-            @endforeach
-        </select>
+        <label>季節
+            <span class="required-badge">必須</span>
+        </label><br>
+
+        @php
+        $allSeasons = ['春' => 1, '夏' => 2, '秋' => 3, '冬' => 4];
+        $selectedSeasons = old('seasons', []);
+        @endphp
+
+        @foreach($allSeasons as $name => $id)
+        <label style="cursor:pointer; user-select:none;">
+            <input type="checkbox" name="season[]" value="{{ $id }}"
+                @if(in_array($id, $selectedSeasons)) checked @endif>
+            {{ $name }}
+        </label>
+        @endforeach
+
         <div class="form__error">
             @error('season')
+            {{ $message }}
+            @enderror
+            @error('season.*')
             {{ $message }}
             @enderror
         </div>
@@ -59,7 +102,10 @@
 
     <!-- 商品説明 -->
     <div>
-        <label>商品説明</label><br>
+        <label>商品説明
+            <span class="required-badge">必須</span>
+        </label><br>
+
         <textarea name="description" maxlength="120">{{ old('description') }}</textarea>
         <div class="form__error">
             @error('description')

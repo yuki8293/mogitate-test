@@ -52,7 +52,8 @@ class ProductController extends Controller
         ]);
     }
 
-    public function show($productId) {
+    public function show($productId)
+    {
 
         $product = Product::findOrFail($productId);
         return view('products.show', compact('product'));
@@ -92,7 +93,8 @@ class ProductController extends Controller
         return redirect('/products')->with('success', '商品を登録しました！');
     }
 
-    public function update(ProductUpdateRequest $request, $productId) {
+    public function update(ProductUpdateRequest $request, $productId)
+    {
 
         $validated = $request->validated();
 
@@ -114,5 +116,15 @@ class ProductController extends Controller
             ->with('success', '商品情報を更新しました');
     }
 
-    public function destroy($productId) {}
+    public function destroy($productId)
+    {
+
+        $product = Product::findOrFail($productId);
+
+        // DBから削除
+        $product->delete();
+
+        // 一覧ページへ戻る
+        return redirect('/products')->with('success', '商品を削除しました');
+    }
 }

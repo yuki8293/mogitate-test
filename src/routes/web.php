@@ -31,4 +31,4 @@ Route::get('/products/register', [ProductController::class, 'create']);
 Route::post('/products/register', [ProductController::class, 'store']);
 
 // 商品削除
-Route::post('/products/{productId}/delete', [ProductController::class, 'destroy']);
+Route::delete('/products/{productId}/delete', [ProductController::class, 'destroy']);

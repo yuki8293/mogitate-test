@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@php
+use Illuminate\Support\Str;
+@endphp
+
 @section('content')
 
 @if(!empty($keyword))
@@ -41,10 +45,18 @@
 <a href="{{ url('/products/detail/' . $product->id) }}" style="text-decoration:none; color:inherit;">
 
     <div style="border:1px solid #ccc; margin-bottom:10px; padding:10px;">
+
+        @if(Str::startsWith($product->image, 'products/'))
+        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="100">
+        @else
         <img src="{{ asset('images/products/' . $product->image) }}" alt="{{ $product->name }}" width="100">
+        @endif
+
 
         <h3>{{ $product->name }}</h3>
         <p>¥{{ number_format($product->price) }}</p>
+
+
     </div>
 </a>
 @endforeach
