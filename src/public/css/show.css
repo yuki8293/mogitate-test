@@ -1,0 +1,121 @@
+/* 全体コンテナ */
+.product-detail-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* パンくず */
+.breadcrumb {
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 左右分割 */
+.product-detail-main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* 全体中央寄せ */
+    gap: 24px;
+}
+
+/* 左：画像 */
+.product-detail-image {
+    flex: 0 0 300px;
+    /* 画像大きめ */
+    text-align: center;
+}
+
+.product-detail-image img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.input-file {
+    display: block;
+    margin: 8px auto 16px auto;
+}
+
+/* 右：商品情報 */
+.product-detail-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ラベルと入力欄 */
+.form-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.input-field,
+textarea {
+    width: 100%;
+    max-width: 500px;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* チェックボックス（季節） */
+.seasons-group label {
+    display: inline-block;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+/* エラー表示 */
+.form__error {
+    color: red;
+    font-size: 12px;
+}
+
+/* 商品説明とボタンを画像下に配置 */
+.product-detail-main+.form-group,
+.product-detail-main+.action-buttons {
+    width: 100%;
+    margin-top: 16px;
+    text-align: center;
+}
+
+/* ボタン */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.action-buttons button,
+.action-buttons form button {
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.action-buttons .product-detail-save {
+    background-color: #f5a623;
+    color: #fff;
+}
+
+.action-buttons form button {
+    background-color: #ff5c5c;
+    color: #fff;
+}

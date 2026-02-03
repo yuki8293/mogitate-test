@@ -5,11 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mogitate</title>
+
+    {{-- reset → common の順 --}}
+    <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/common.css') }}">
+
+    {{-- ページ個別CSS --}}
+    @yield('css')
+
 </head>
 
 <body>
-    <header>
-        <h1>mogitate</h1> <!-- ここが共通 -->
+    <header class="header">
+        <h1 class="logo">mogitate</h1> <!-- ここが共通 -->
     </header>
 
     <main>

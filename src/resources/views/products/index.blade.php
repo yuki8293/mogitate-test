@@ -1,65 +1,96 @@
 @extends('layouts.app')
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/index.css') }}">
+@endsection
+
 @php
 use Illuminate\Support\Str;
 @endphp
 
 @section('content')
 
-@if(!empty($keyword))
-<h2>"{{ $keyword }}"の商品一覧</h2>
-@else
-<h2>商品一覧</h2>
-@endif
+<div class="product-index">
 
-<a href="{{ url('/products/register') }}">＋商品を追加</a>
+    @if(!empty($keyword))
+    <h2 class="page-title">"{{ $keyword }}"の商品一覧</h2>
+    @else
 
-<form action="{{ url('/products/search') }}" method="get" style="margin-top:10px;">
-    <input type="text" name="keyword" placeholder="検索キーワード">
-    <button type="submit">検索</button>
-</form>
+    <div class="product-area">
+        <div class="product-area__header">
+            <h2 class="page-title">商品一覧</h2>
+            @endif
 
-<div style="margin-top:10px;">
-    <form method="get" action="{{ url('/products') }}">
-        <span>価格順で表示:</span>
-        <select name="sort" onchange="this.form.submit()">
-            <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>安い順に表示</option>
-            <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>高い順に表示</option>
-        </select>
-    </form>
-</div>
+            {{-- 上部操作エリア --}}
+            <div class="product-index__actions">
 
-@if(!empty($currentSort))
-<div id="sort-history" style="display:flex; justify-content:space-between; align-items:center; border:1px solid #ccc; padding:5px 10px; margin-top:10px; background-color:#f9f9f9;">
-    <span>
-        {{ $currentSort == 'asc' ? '安い順' : '高い順' }} に表示
-    </span>
+                <a href="{{ url('/products/register') }}" class="add-product-btn">＋商品を追加</a>
 
-    <button type="button" onclick="document.getElementById('sort-history').style.display='none'" style="border:none; background:none; font-weight:bold; cursor:pointer;">×</button>
-</div>
-@endif
+                <div class="sidebar">
+                    <form action="{{ url('/products/search') }}" method="get" style="margin-top:10px;">
+                        <input type="text" name="keyword" placeholder="検索キーワード">
+                        <button type="submit">検索</button>
+                    </form>
 
-<hr>
+                    <div style="margin-top:10px;">
+                        <form method="get" action="{{ url('/products') }}">
+                            <span>価格順で表示:</span>
+                            <select name="sort" onchange="this.form.submit()">
+                                <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>安い順に表示</option>
+                                <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>高い順に表示</option>
+                            </select>
+                        </form>
+                    </div>
 
-@foreach($products as $product)
-<a href="{{ url('/products/detail/' . $product->id) }}" style="text-decoration:none; color:inherit;">
+                    @if(!empty($currentSort))
+                    <div class="sort-history" id="sort-history">
 
-    <div style="border:1px solid #ccc; margin-bottom:10px; padding:10px;">
+                        <span>
+                            {{ $currentSort == 'asc' ? '安い順' : '高い順' }} に表示
+                        </span>
 
-        @if(Str::startsWith($product->image, 'products/'))
-        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="100">
-        @else
-        <img src="{{ asset('images/products/' . $product->image) }}" alt="{{ $product->name }}" width="100">
-        @endif
+                        <button
+                            type="button"
+                            class="sort-history__close"
+                            onclick="document.getElementById('sort-history').style.display='none'">
+                            ×
+                        </button>
+                    </div>
+                    @endif
 
+                    {{-- 商品一覧 --}}
+                    <div class="product-list">
 
-        <h3>{{ $product->name }}</h3>
-        <p>¥{{ number_format($product->price) }}</p>
+                        @foreach($products as $product)
+                        <a href="{{ url('/products/detail/' . $product->id) }}" class="product-card">
 
+                            <div class="product-card__inner">
 
-    </div>
-</a>
-@endforeach
+                                @if(Str::startsWith($product->image, 'products/'))
+                                <img src="{{ asset('storage/' . $product->image) }}"
+                                    alt="{{ $product->name }}"
+                                    class="product-card__image">
+                                @else
+                                <img src="{{ asset('images/products/' . $product->image) }}"
+                                    alt="{{ $product->name }}"
+                                    class="product-card__image">
+                                @endif
 
-{{ $products->links() }}
-@endsection
+                                <h3 class="product-card__name">{{ $product->name }}</h3>
+                                <p class="product-card__price">¥{{ number_format($product->price) }}</p>
+
+                            </div>
+                        </a>
+                        @endforeach
+                    </div>
+
+                    {{-- ページネーション --}}
+                    <div class="pagination-wrapper">
+                        @for($i = 1; $i <= $products->lastPage(); $i++)
+                            <a href="{{ $products->url($i) }}"
+                                class="page-link {{ $products->currentPage() == $i ? 'active' : '' }}">
+                                {{ $i }}
+                            </a>
+                            @endfor
+                    </div>
+                    @endsection

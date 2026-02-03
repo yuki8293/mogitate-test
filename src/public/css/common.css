@@ -1,0 +1,27 @@
+/* body全体 */
+body {
+    margin: 0;
+    font-family: "Noto Sans JP", sans-serif;
+    background-color: #f2f2f2;
+    /* 薄いグレー */
+}
+
+/* ヘッダー */
+.header {
+    background-color: #fff;
+    /* 白 */
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+/* ロゴ */
+.header .logo {
+    color: #f5a623;
+    /* 黄色に近いオレンジ */
+    font-weight: bold;
+    font-size: 24px;
+    text-decoration: none;
+}
+

@@ -1,0 +1,123 @@
+.page-title {
+    color: #000;
+    /* 黒 */
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3列 */
+    gap: 2px;
+}
+
+/* カードリンク全体 */
+.product-card {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* カード本体 */
+.product-card__inner {
+    background: #fff;
+    /* 枠の背景 */
+    border-radius: 8px;
+    /* 角丸 */
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    /* 画像→名前→価格を縦並び */
+    align-items: center;
+    /* 中央寄せ */
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s;
+}
+
+.product-card__inner:hover {
+    transform: translateY(-4px);
+    /* hoverで少し浮かせる */
+}
+
+/* 画像 */
+.product-card__image {
+    width: 90%;
+    /* カード幅いっぱい */
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+/* 商品名 */
+.product-card__name {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 0 4px;
+    text-align: center;
+}
+
+/* 価格 */
+.product-card__price {
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+}
+
+
+/* 追加ボタン */
+.add-product-btn {
+    background-color: #f5a623;
+    color: #000;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap;
+
+    margin-left: auto;
+}
+
+/* ページネーション全体を中央に */
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    /* 真ん中寄せ */
+    margin: 24px 0;
+    /* 上下に余白 */
+    gap: 8px;
+    /* ページ番号の間隔 */
+}
+
+.pagination-wrapper .page-link {
+    display: flex;
+    /* 中央寄せ */
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    /* 正方形にする */
+    height: 32px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    /* ← 丸くする */
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0 4px;
+}
+
+.pagination-wrapper .active {
+    background-color: #f5a623;
+    /* オレンジ */
+    color: #000;
+    border-color: #f5a623;
+}
+
+.pagination-wrapper .page-link:hover {
+    background-color: #f0c14b;
+    color: #000;
+}
+

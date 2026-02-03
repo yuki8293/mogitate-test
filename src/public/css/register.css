@@ -1,0 +1,127 @@
+
+/* 全体コンテナ */
+.register-container {
+    max-width: 520px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fafafa;
+    border-radius: 8px;
+}
+
+/* タイトル */
+.register-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* 各入力グループ */
+.form-group {
+    margin-bottom: 22px;
+}
+
+/* ラベル */
+.form-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+/* 必須 */
+.required {
+    color: red;
+    font-size: 12px;
+    margin-left: 6px;
+}
+
+/* 補足文 */
+.note {
+    font-size: 12px;
+    color: #666;
+    margin-left: 6px;
+}
+
+/* 入力欄 */
+input[type="text"],
+input[type="number"],
+input[type="file"],
+textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* テキストエリア */
+textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+/* 季節チェックボックス */
+.season-options {
+    margin-top: 8px;
+}
+
+.season-options label {
+    margin-right: 14px;
+    cursor: pointer;
+}
+
+/* エラーメッセージ */
+.form__error {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* ボタンエリア */
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 30px;
+}
+
+/* 戻るボタン */
+.btn-back {
+    padding: 8px 18px;
+    background: #ddd;
+    color: #000;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+/* 登録ボタン */
+.btn-submit {
+    padding: 8px 18px;
+    background: #f5a623;
+    /* オレンジ */
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ホバー */
+.btn-submit:hover {
+    opacity: 0.85;
+}
+
+.btn-back:hover {
+    opacity: 0.85;
+}
+
+/* Chrome, Edge, Safari 用 */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox 用 */
+input[type=number] {
+    -moz-appearance: textfield;
+}
