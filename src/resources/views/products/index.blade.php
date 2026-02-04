@@ -36,6 +36,9 @@ use Illuminate\Support\Str;
                         <form method="get" action="{{ url('/products') }}">
                             <span>価格順で表示:</span>
                             <select name="sort" onchange="this.form.submit()">
+                                <option value="" {{ request('sort') == null ? 'selected' : '' }}>
+                                    価格で並び替え
+                                </option>
                                 <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>安い順に表示</option>
                                 <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>高い順に表示</option>
                             </select>
@@ -49,12 +52,8 @@ use Illuminate\Support\Str;
                             {{ $currentSort == 'asc' ? '安い順' : '高い順' }} に表示
                         </span>
 
-                        <button
-                            type="button"
-                            class="sort-history__close"
-                            onclick="document.getElementById('sort-history').style.display='none'">
-                            ×
-                        </button>
+                        <a href="{{ url('/products') }}">×</a>
+
                     </div>
                     @endif
 
@@ -66,15 +65,10 @@ use Illuminate\Support\Str;
 
                             <div class="product-card__inner">
 
-                                @if(Str::startsWith($product->image, 'products/'))
                                 <img src="{{ asset('storage/' . $product->image) }}"
                                     alt="{{ $product->name }}"
                                     class="product-card__image">
-                                @else
-                                <img src="{{ asset('images/products/' . $product->image) }}"
-                                    alt="{{ $product->name }}"
-                                    class="product-card__image">
-                                @endif
+
 
                                 <h3 class="product-card__name">{{ $product->name }}</h3>
                                 <p class="product-card__price">¥{{ number_format($product->price) }}</p>
