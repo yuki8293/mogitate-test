@@ -22,12 +22,7 @@
 
                 @php use Illuminate\Support\Str; @endphp
 
-                @if(Str::startsWith($product->image,'products/'))
                 <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="150">
-                @else
-                <img src="{{ asset('images/products/' . $product->image) }}" alt="{{ $product->name }}" width="150">
-                @endif
-
 
 
                 <input type="file" name="image" class="input-file">

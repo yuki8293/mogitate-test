@@ -104,10 +104,11 @@ class ProductController extends Controller
         $product->description = $validated['description'];
 
         if ($request->hasFile('image')) {
-            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('images/products'), $imageName);
-            $product->image = $imageName;
+            // storage/app/public/products に保存される
+            $path = $request->file('image')->store('products', 'public');
+            $product->image = $path; // 'products/xxxx.png' の形式でDBに保存
         }
+
 
         $product->save();
         $product->seasons()->sync($validated['seasons']);

@@ -27,6 +27,7 @@ docker-compose up -d --build
 ```
 docker-compose exec php bash
 composer install
+exit
 ```
 
 #### .env ファイルの作成
@@ -50,6 +51,7 @@ DB_PASSWORD=laravel_pass
 
 ```
 php artisan key:generate
+php artisan storage:link
 ```
 
 #### マイグレーション・シーディングを実行
